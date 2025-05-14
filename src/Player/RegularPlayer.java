@@ -2,10 +2,9 @@ package Player;
 import java.util.Random;
 
 public class RegularPlayer extends Player{
-    private String color;
 
-    public RegularPlayer(String color) {
-        super(color);
+    public RegularPlayer(String color, int position) {
+        super(color, position);
     }
 
     public int roll(){

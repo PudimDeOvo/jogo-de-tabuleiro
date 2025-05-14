@@ -2,10 +2,11 @@ package Player;
 
 public abstract class Player {
     protected String color;
-    protected int position = 0;
+    protected int position;
 
-    public Player(String color){
+    public Player(String color, int position){
         this.color = color;
+        this.position = position;
     }
 
     public abstract int roll();

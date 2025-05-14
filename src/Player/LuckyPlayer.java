@@ -4,8 +4,8 @@ import java.util.Random;
 public class LuckyPlayer extends Player{
     private String color;
 
-    public LuckyPlayer(String color){
-        super(color);
+    public LuckyPlayer(String color, int position){
+        super(color, position);
     }
 
     public int roll(){
