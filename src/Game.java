@@ -1,15 +1,17 @@
 import Player.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Game {
-    private ArrayList<Player> players = new ArrayList<>();
 
     public Game(){}
 
-    public void setupGame(ArrayList<String> colors, int numOfPlayers) {
-
+    public ArrayList<Player> defPlayers(ArrayList<String> colors, int numOfPlayers) {
+        ArrayList<Player> players = new ArrayList<>();
         Scanner input = new Scanner(System.in);
 
         for (int i = 0; i < numOfPlayers; i++) {
@@ -38,15 +40,42 @@ public class Game {
             }
         }
 
-        // ADICIONAR EXCEÇÃO PRA QUANDO NÃO HOUVER MAIS DE UM TIPO DE JOGADOR
+        return players;
+    }
 
+    public boolean isGameValid(ArrayList<Player> players){
+        Set<String> playerTypes = new HashSet<>();
+
+        for (Player player : players) {
+            playerTypes.add(player.getPlayerType());
+
+            if (playerTypes.size() >= 2) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void listPlayers(ArrayList<Player> players){
         System.out.println("List of players: ");
         for (int i = 0; i < players.size(); i++){
-            System.out.println("P" + (i+1) + ": " + colors.get(i) + " - " + players.get(i).getPlayerType());
+            System.out.println("P" + (i+1) + ": " + players.get(i).getColor() + " - " + players.get(i).getPlayerType());
         }
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
+
+    // vou refinar essa merda depois. eu to enlouquecendo aqui ja
+    // botar essa buceta de função dentro de um for na main
+    public void playerTurn(ArrayList<Player> players, int playerIndex, Gameboard gameboard){
+        int playerRoll = players.get(playerIndex).roll();
+
+        players.get(playerIndex).setPosition(
+                players.get(playerIndex).getPosition() + playerRoll
+        );
+
+        gameboard.getBoard().get(
+                players.get(playerIndex).getPosition()
+        ).effect(players, playerIndex);
     }
+
 }

@@ -4,7 +4,7 @@ import Tile.*;
 import java.util.ArrayList;
 
 public class Gameboard {
-    private ArrayList<Tile> board = new ArrayList<>();
+    private final ArrayList<Tile> board = new ArrayList<>();
 
     public Gameboard(){
 
