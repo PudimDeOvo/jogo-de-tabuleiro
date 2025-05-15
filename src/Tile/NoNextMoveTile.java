@@ -2,7 +2,7 @@ package Tile;
 import Player.Player;
 import java.util.ArrayList;
 
-public class NoNextMoveTile {
+public class NoNextMoveTile extends Tile{
     public NoNextMoveTile(){
         super();
     }

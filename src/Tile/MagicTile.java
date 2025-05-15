@@ -2,7 +2,7 @@ package Tile;
 import Player.Player;
 import java.util.ArrayList;
 
-public class MagicTile {
+public class MagicTile extends Tile{
     public MagicTile() {
         super();
     }

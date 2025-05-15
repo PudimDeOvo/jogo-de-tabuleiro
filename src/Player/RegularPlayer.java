@@ -4,7 +4,7 @@ import java.util.Random;
 public class RegularPlayer extends Player{
 
     public RegularPlayer(String color, int position) {
-        super(color, position);
+        super(color, position, "Regular");
     }
 
     public int roll(){

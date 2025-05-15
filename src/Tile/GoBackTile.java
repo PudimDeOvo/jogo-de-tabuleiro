@@ -4,7 +4,7 @@ import Player.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GoBackTile {
+public class GoBackTile extends Tile{
     public GoBackTile() {
         super();
     }

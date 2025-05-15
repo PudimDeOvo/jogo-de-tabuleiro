@@ -5,7 +5,7 @@ public class LuckyPlayer extends Player{
     private String color;
 
     public LuckyPlayer(String color, int position){
-        super(color, position);
+        super(color, position, "Lucky");
     }
 
     public int roll(){
