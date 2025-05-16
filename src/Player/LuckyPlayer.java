@@ -4,10 +4,11 @@ import java.util.Random;
 public class LuckyPlayer extends Player{
     private String color;
 
-    public LuckyPlayer(String color, int position){
-        super(color, position, "Lucky");
+    public LuckyPlayer(String color, int position, boolean nextMove){
+        super(color, position, "Lucky", nextMove);
     }
 
+    @Override
     public int roll(){
         Random random = new Random();
         int d1 = random.nextInt(6) + 1;
@@ -17,11 +18,11 @@ public class LuckyPlayer extends Player{
             return roll();
         }
         else if (d1 == d2){
-            System.out.println("Lucky roll! " + d1 + " and " + d2);
+            System.out.println("Lucky roll! " + d1 + " and " + d2  + "\n");
             return (d1 + d2) + roll();
         }
         else {
-            System.out.println("Dice rolls: " + d1 + " and " + d2);
+            System.out.println("Dice rolls: " + d1 + " and " + d2  + "\n");
             return d1 + d2;
         }
     }
