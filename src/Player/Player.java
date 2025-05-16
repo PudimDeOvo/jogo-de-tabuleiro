@@ -4,14 +4,20 @@ public abstract class Player {
     protected String color;
     protected int position;
     protected String playerType;
+    protected boolean nextMove;
 
-    public Player(String color, int position, String playerType){
+    public Player(String color, int position, String playerType, boolean nextMove) {
         this.color = color;
-        this.position = position;
+        this.position = 0;
         this.playerType = playerType;
+        this.nextMove = true;
     }
 
     public abstract int roll();
+
+    public void printPosition(int index){
+        System.out.println("Player " + getColor() +" of index: " + index + " is at position: " + getPosition()  + "\n");
+    }
 
     public String getColor(){
         return this.color;
@@ -27,5 +33,13 @@ public abstract class Player {
 
     public String getPlayerType(){
         return this.playerType;
+    }
+
+    public boolean getNextMove(){
+        return this.nextMove;
+    }
+
+    public void setNextMove(boolean nextMove){
+        this.nextMove = nextMove;
     }
 }
