@@ -25,11 +25,11 @@ public class Main {
         boolean validInput = false;
         while (!validInput) {
             try{
-                System.out.println("How many players will there be? (2-6)");
+                System.out.println("How many players will there be? (2-6)\n");
                 numPlayers = input.nextInt();
 
                 if (numPlayers < 2 || numPlayers > 6) {
-                    throw new numPlayersInvalid("Number of players must be between 2 and 6");
+                    throw new numPlayersInvalid("Number of players must be between 2 and 6\n");
                 }
                 validInput = true;
             }
@@ -45,12 +45,14 @@ public class Main {
             if (game.isGameValid(players)){
                 System.out.println("All set!");
                 game.listPlayers(players);
-                System.out.println("Booting up board game...");
+                System.out.println("Booting up board game...\n");
             } else {
-                System.out.println("Invalid player configuration: Should have at least two different types.");
+                System.out.println("Invalid player configuration: Should have at least two different types.\n");
             }
         }
 
         input.close();
+        //System.out.println("----- Game is starting! -----\n");
+        //game.startGame(players, 0);
     }
 }
