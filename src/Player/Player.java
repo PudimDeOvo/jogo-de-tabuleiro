@@ -2,10 +2,10 @@ package Player;
 
 public abstract class Player {
     protected String color;
-    protected int position;
     protected String playerType;
-    protected boolean nextMove;
     protected int countPlays;
+    protected int position;
+    protected boolean nextMove;
 
     public Player(String color, int position, String playerType, boolean nextMove, int countPlays) {
         this.color = color;

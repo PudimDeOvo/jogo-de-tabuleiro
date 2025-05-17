@@ -8,7 +8,7 @@ public class NoNextMoveTile extends Tile {
     }
 
     public void effect(ArrayList<Player> players, int index){
-        System.out.println("No next move tile! You lose your next turn!\n");
+        System.out.println("No next move tile! You lose your next turn!");
         players.get(index).setNextMove(false);
     }
 }

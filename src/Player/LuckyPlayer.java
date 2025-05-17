@@ -18,11 +18,11 @@ public class LuckyPlayer extends Player{
             return roll();
         }
         else if (d1 == d2){
-            System.out.println("Lucky roll! " + d1 + " and " + d2  + "\n");
+            System.out.println("Lucky roll! " + d1 + " and " + d2);
             return (d1 + d2) + roll();
         }
         else {
-            System.out.println("Dice rolls: " + d1 + " and " + d2  + "\n");
+            System.out.println("Dice rolls: " + d1 + " and " + d2 + "\n");
             return d1 + d2;
         }
     }
