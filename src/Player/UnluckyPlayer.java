@@ -4,8 +4,8 @@ import java.util.Random;
 public class UnluckyPlayer extends Player{
     private String color;
 
-    public UnluckyPlayer(String color, int position, boolean nextMove) {
-        super(color, position, "Unlucky", nextMove);
+    public UnluckyPlayer(String color, int position, boolean nextMove, int countPlays) {
+        super(color, position, "Unlucky", nextMove, countPlays);
     }
 
     @Override
