@@ -15,6 +15,6 @@ public class GoBackTile extends Tile{
         int indexGoBackPlayer = input.nextInt();
         System.out.println("Haha! You're in trouble");
         players.get(indexGoBackPlayer).setPosition(0);
-        // System.out.println("Player" + indexGoBackPlayer + " Color: " + players.get(indexGoBackPlayer).getColor() + " Position: " + players.get(indexGoBackPlayer).getPosition());
+        
     }
 }
