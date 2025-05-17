@@ -3,8 +3,8 @@ import java.util.Random;
 
 public class RegularPlayer extends Player{
 
-    public RegularPlayer(String color, int position, boolean nextMove) {
-        super(color, position, "Regular", nextMove);
+    public RegularPlayer(String color, int position, boolean nextMove, int countPlays) {
+        super(color, position, "Regular", nextMove, countPlays);
     }
 
     @Override
