@@ -5,12 +5,14 @@ public abstract class Player {
     protected int position;
     protected String playerType;
     protected boolean nextMove;
+    protected int countPlays;
 
-    public Player(String color, int position, String playerType, boolean nextMove) {
+    public Player(String color, int position, String playerType, boolean nextMove, int countPlays) {
         this.color = color;
         this.position = 0;
         this.playerType = playerType;
         this.nextMove = true;
+        this.countPlays = 0;
     }
 
     public abstract int roll();
@@ -41,5 +43,12 @@ public abstract class Player {
 
     public void setNextMove(boolean nextMove){
         this.nextMove = nextMove;
+    }
+
+    public int getCountPlays(){
+        return this.countPlays;
+    }
+    public void setCountPlays(int countPlays){
+        this.countPlays = countPlays;
     }
 }
