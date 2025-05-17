@@ -8,7 +8,7 @@ public class Gameboard {
 
     public Gameboard(){
 
-        for (int i = 0; i < 40; i++){
+        for (int i = 0; i <= 40; i++){
             if (i == 10 || i == 25 || i == 38){
                 NoNextMoveTile tile = new NoNextMoveTile();
                 board.add(tile);
