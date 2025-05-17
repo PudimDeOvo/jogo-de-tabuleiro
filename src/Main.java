@@ -51,8 +51,9 @@ public class Main {
             }
         }
 
+        System.out.println("----- Game is starting! -----\n");
+        game.startGame(players, 0);
+
         input.close();
-        //System.out.println("----- Game is starting! -----\n");
-        //game.startGame(players, 0);
     }
 }
