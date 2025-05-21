@@ -9,10 +9,10 @@ public abstract class Player {
 
     public Player(String color, int position, String playerType, boolean nextMove, int countPlays) {
         this.color = color;
-        this.position = 0;
+        this.position = position;
         this.playerType = playerType;
         this.nextMove = true;
-        this.countPlays = 0;
+        this.countPlays = countPlays;
     }
 
     public abstract int roll();
@@ -48,6 +48,7 @@ public abstract class Player {
     public int getCountPlays(){
         return this.countPlays;
     }
+
     public void setCountPlays(int countPlays){
         this.countPlays = countPlays;
     }

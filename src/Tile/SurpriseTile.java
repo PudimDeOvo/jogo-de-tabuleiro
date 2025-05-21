@@ -17,14 +17,17 @@ public class SurpriseTile extends Tile{
         if (card == 1){
             Player player = new RegularPlayer(players.get(index).getColor(), players.get(index).getPosition(), true, players.get(index).getCountPlays());
             players.set(index, player);
+            System.out.println("Player P" + (index + 1) + " became " + players.get(index).getPlayerType());
         }
         else if (card == 2){
             Player player = new UnluckyPlayer(players.get(index).getColor(), players.get(index).getPosition(), true, players.get(index).getCountPlays());
             players.set(index, player);
+            System.out.println("Player P" + (index + 1) + " became " + players.get(index).getPlayerType());
         }
         else {
             Player player = new LuckyPlayer(players.get(index).getColor(), players.get(index).getPosition(), true, players.get(index).getCountPlays());
             players.set(index, player);
+            System.out.println("Player P" + (index + 1) + " became " + players.get(index).getPlayerType());
         }
     }
 }

@@ -68,32 +68,48 @@ public abstract class Game {
         System.out.print("\n");
     }
 
-    // marcello disse: vou refinar essa buceta aqui depois. estou enlouquecendo. botar essa bct de funcao dentro de main
-    // mds na vdd to enlouquecendo tambem!!!
-    public void playerTurn(ArrayList<Player> players, int playerIndex, Gameboard gameboard, Scanner input) {
 
-        System.out.println("[Press any key to roll your dice!]");
-        input.nextLine();
+    public abstract void playerTurn(ArrayList<Player> players, int playerIndex, Gameboard gameboard, Scanner input);
 
-        int playerRoll = players.get(playerIndex).roll();
+    public void startGame(ArrayList<Player> players, Scanner input){
+        int turn = 1;
+        boolean haveWinner = false;
 
-        if(players.get(playerIndex).getPosition() + playerRoll <= 40) {
-            players.get(playerIndex).setPosition(
-                    players.get(playerIndex).getPosition() + playerRoll
-            );
-            gameboard.getBoard().get(
-                    players.get(playerIndex).getPosition()
-            ).effect(players, playerIndex);
-        } else {
-            players.get(playerIndex).setPosition(40);
+        while (!haveWinner) {
+            for (int i = 0; i < players.size(); i++) {
+                System.out.println("-----[TURN " + turn + "]-----");
+
+                if (players.get(i).getNextMove()) {
+                    System.out.println("Current player: P" + (i + 1) + " - " + players.get(i).getColor() + "\n");
+                    playerTurn(players, i, gameboard, input);
+
+                    if (players.get(i).getPosition() >= 40) {
+                        System.out.println("Player " + players.get(i).getColor() + " wins! \n");
+                        haveWinner = true;
+                        break;
+                    }
+
+                    listPlayers(players);
+
+                } else {
+                    System.out.println("Player " + players.get(i).getColor() + " is skipping this turn.\n");
+                    players.get(i).setNextMove(true);
+                }
+
+                System.out.println("[Press any key to proceed]");
+                input.nextLine();
+            }
         }
 
-        players.get(playerIndex).setCountPlays(
-                players.get(playerIndex).getCountPlays() + 1
-        );
+
+        System.out.println("----- We have a winner! ----- \n");
+        System.out.println("List of players and the count of each one's plays: \n");
+
+        for (Player player : players) {
+            System.out.println("[Player: " + player.getColor() +
+                    " in position: " + player.getPosition() +
+                    " - Total plays: " + player.getCountPlays() + "]\n");
+        }
     }
-
-
-    public abstract void startGame(ArrayList<Player> players, Scanner input);
 
 }
