@@ -2,17 +2,44 @@ package GameModes;
 
 import Player.*;
 import Gameboard.Gameboard;
+import Tile.Tile;
+import Tile.TileFactory;
+
 import java.util.*;
 
 public abstract class Game {
+    Scanner input = new Scanner(System.in);
+
     protected final Gameboard gameboard = new Gameboard();
+    ArrayList<String> colors = new ArrayList<>() {{
+        add("Blue");
+        add("Red");
+        add("Green");
+        add("Yellow");
+        add("Pink");
+        add("Purple");
+    }};
+
 
     public Game(){}
 
-    public ArrayList<Player> defPlayers(ArrayList<String> colors, int numOfPlayers) {
-        ArrayList<Player> players = new ArrayList<>();
-        Scanner input = new Scanner(System.in);
+    public void setupGameboard(int numOfTiles){
+        //ADICIONAR TRATAMENTO DE EXCEÇÃO
+        for(int i = 0; i<numOfTiles; i++){
+            System.out.print("Choose type for tile " + (i+1) + " (regular, goback, lucky, magic, nonextmove or surprise): ");
+            String TileType = input.next();
 
+            Tile tile = TileFactory.getTile(TileType);
+            if (tile == null){
+                System.out.println("Invalid input. Try again");
+                i++;
+            } else {
+                gameboard.getBoard().add(tile);
+            }
+        }
+    }
+
+    public void defPlayers(int numOfPlayers) {
         for (int i = 0; i < numOfPlayers; i++) {
             try {
                 System.out.print("Choose the type of player " + (i+1) + " (1- Regular, 2- Lucky, 3- Unlucky): ");
@@ -35,7 +62,7 @@ public abstract class Game {
                         break;
                 }
                 if (newPlayer != null) {
-                    players.add(newPlayer);
+                    gameboard.getPlayers().add(newPlayer);
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Try again");
@@ -43,57 +70,34 @@ public abstract class Game {
                 i--;
             }
         }
-
-        return players;
-    }
-
-    public boolean isGameValid(ArrayList<Player> players){
-        Set<String> playerTypes = new HashSet<>();
-
-        for (Player player : players) {
-            playerTypes.add(player.getPlayerType());
-
-            if (playerTypes.size() >= 2) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void listPlayers(ArrayList<Player> players){
-        System.out.println("\n-----[List of players]: \n");
-        for (int i = 0; i < players.size(); i++){
-            System.out.println("P" + (i+1) + ": " + players.get(i).getColor() + " - " + players.get(i).getPlayerType() + " - Position: " + players.get(i).getPosition());
-        }
-        System.out.print("\n");
     }
 
 
     public abstract void playerTurn(ArrayList<Player> players, int playerIndex, Gameboard gameboard, Scanner input);
 
-    public void startGame(ArrayList<Player> players, Scanner input){
+    public void startGame(Scanner input){
         int turn = 1;
         boolean haveWinner = false;
 
         while (!haveWinner) {
-            for (int i = 0; i < players.size(); i++) {
+            for (int i = 0; i < gameboard.getPlayers().size(); i++) {
                 System.out.println("-----[TURN " + turn + "]-----");
 
-                if (players.get(i).getNextMove()) {
-                    System.out.println("Current player: P" + (i + 1) + " - " + players.get(i).getColor() + "\n");
-                    playerTurn(players, i, gameboard, input);
+                if (gameboard.getPlayers().get(i).getNextMove()) {
+                    System.out.println("Current player: P" + (i + 1) + " - " + gameboard.getPlayers().get(i).getColor() + "\n");
+                    playerTurn(gameboard.getPlayers(), i, gameboard, input);
 
-                    if (players.get(i).getPosition() >= 40) {
-                        System.out.println("Player " + players.get(i).getColor() + " wins! \n");
+                    if (gameboard.getPlayers().get(i).getPosition() >= 40) {
+                        System.out.println("Player " + gameboard.getPlayers().get(i).getColor() + " wins! \n");
                         haveWinner = true;
                         break;
                     }
 
-                    listPlayers(players);
+                    gameboard.listPlayers();
 
                 } else {
-                    System.out.println("Player " + players.get(i).getColor() + " is skipping this turn.\n");
-                    players.get(i).setNextMove(true);
+                    System.out.println("Player " + gameboard.getPlayers().get(i).getColor() + " is skipping this turn.\n");
+                    gameboard.getPlayers().get(i).setNextMove(true);
                 }
 
                 System.out.println("[Press any key to proceed]");
@@ -105,7 +109,7 @@ public abstract class Game {
         System.out.println("----- We have a winner! ----- \n");
         System.out.println("List of players and the count of each one's plays: \n");
 
-        for (Player player : players) {
+        for (Player player : gameboard.getPlayers()) {
             System.out.println("[Player: " + player.getColor() +
                     " in position: " + player.getPosition() +
                     " - Total plays: " + player.getCountPlays() + "]\n");

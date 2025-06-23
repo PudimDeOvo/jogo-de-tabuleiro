@@ -11,15 +11,6 @@ public class Main {
         Scanner input = new Scanner(System.in);
         Game game = null;
 
-        ArrayList<String> colors = new ArrayList<>() {{
-            add("Blue");
-            add("Red");
-            add("Green");
-            add("Yellow");
-            add("Pink");
-            add("Purple");
-        }};
-
         System.out.println("----- Welcome to the game! -----\n");
         System.out.println("[Press any key to proceed]");
         String initialKey = input.nextLine();
@@ -30,7 +21,6 @@ public class Main {
             game = new RegularMode();
         }
         System.out.println("----- Let's start by getting to know our competitors -----\n");
-
         int numPlayers = 0;
         boolean validInput = false;
         while (!validInput) {
@@ -52,23 +42,11 @@ public class Main {
         }
 
 
-        ArrayList<Player> players = new ArrayList<>();
-        while (!game.isGameValid(players)){
-            players = game.defPlayers(colors, numPlayers);
-
-            if (game.isGameValid(players)){
-                System.out.println("\n----- All set! -----");
-                game.listPlayers(players);
-                System.out.println("Booting up board game...\n");
-            } else {
-                System.out.println("Invalid player configuration: Should have at least two different types.\n");
-            }
-        }
 
         System.out.println("----- Get ready! The game is starting! -----\n");
         input.nextLine(); // Lendo buffer
 
-        game.startGame(players, input);
+        game.startGame(input);
 
         input.close();
     }

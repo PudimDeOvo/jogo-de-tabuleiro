@@ -1,44 +1,45 @@
 package Gameboard;
 
+import Player.Player;
 import Tile.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Gameboard {
-    private final ArrayList<Tile> board = new ArrayList<>();
+    private ArrayList<Tile> board;
+    private ArrayList<Player> players;
 
     public Gameboard(){
+        this.board = new ArrayList<>();
+    }
 
-        for (int i = 0; i <= 40; i++){
-            if (i == 10 || i == 25 || i == 38){
-                NoNextMoveTile tile = new NoNextMoveTile();
-                board.add(tile);
-            }
-            else if (i == 13){
-                SurpriseTile tile = new SurpriseTile();
-                board.add(tile);
-            }
-            else if (i == 5 || i == 15 || i == 30){
-                LuckyTile tile = new LuckyTile();
-                board.add(tile);
-            }
-            else if (i == 17 || i == 27){
-                GoBackTile tile = new GoBackTile();
-                board.add(tile);
-            }
-            else if (i == 20 || i == 35){
-                MagicTile tile = new MagicTile();
-                board.add(tile);
-            }
-            else {
-                RegularTile tile = new RegularTile();
-                board.add(tile);
+
+    public boolean isGameValid(){
+        Set<String> playerTypes = new HashSet<>();
+
+        for (Player player : this.players) {
+            playerTypes.add(player.getPlayerType());
+
+            if (playerTypes.size() >= 2) {
+                return true;
             }
         }
+        return false;
+    }
+
+    public void listPlayers(){
+        System.out.println("\n-----[List of players]: \n");
+        for (int i = 0; i < this.players.size(); i++){
+            System.out.println("P" + (i+1) + ": " + this.players.get(i).getColor() + " - " + this.players.get(i).getPlayerType() + " - Position: " + this.players.get(i).getPosition());
+        }
+        System.out.print("\n");
     }
 
     public ArrayList<Tile> getBoard() {
         return board;
     }
+    public ArrayList<Player> getPlayers() { return players; }
 
 }
