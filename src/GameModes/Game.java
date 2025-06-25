@@ -10,7 +10,7 @@ import java.util.*;
 public abstract class Game {
     Scanner input = new Scanner(System.in);
 
-    protected final Gameboard gameboard = new Gameboard();
+    protected final Gameboard gameboard = Gameboard.getInstance();
     ArrayList<String> colors = new ArrayList<>() {{
         add("Blue");
         add("Red");
@@ -24,7 +24,6 @@ public abstract class Game {
     public Game(){}
 
     public void setupGameboard(int numOfTiles){
-        //ADICIONAR TRATAMENTO DE EXCEÇÃO
         for(int i = 0; i<numOfTiles; i++){
             System.out.print("Choose type for tile " + (i+1) + " (regular, goback, lucky, magic, nonextmove or surprise): ");
             String TileType = input.next();
@@ -32,42 +31,53 @@ public abstract class Game {
             Tile tile = TileFactory.getTile(TileType);
             if (tile == null){
                 System.out.println("Invalid input. Try again");
-                i++;
+                i--;
             } else {
                 gameboard.getBoard().add(tile);
             }
         }
     }
 
-    public void defPlayers(int numOfPlayers) {
-        for (int i = 0; i < numOfPlayers; i++) {
-            try {
-                System.out.print("Choose the type of player " + (i+1) + " (1- Regular, 2- Lucky, 3- Unlucky): ");
-                int playerType = input.nextInt();
+    private boolean isGameValid(){
+        Set<String> playerTypes = new HashSet<>();
+        for (Player player : gameboard.getPlayers()){
+            playerTypes.add(player.getPlayerType());
 
-                Player newPlayer = null;
-                switch(playerType) {
-                    case 1:
-                        newPlayer = new RegularPlayer(colors.get(i), 0, true, 0);
-                        break;
-                    case 2:
-                        newPlayer = new LuckyPlayer(colors.get(i), 0, true, 0);
-                        break;
-                    case 3:
-                        newPlayer = new UnluckyPlayer(colors.get(i), 0, true, 0);
-                        break;
-                    default:
-                        System.out.println("Invalid player type. Please choose again. \n");
+            if (playerTypes.size() >= 2){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void defPlayers(int numOfPlayers) {
+        while(!isGameValid()){
+            gameboard.getPlayers().clear();
+            for (int i = 0; i < numOfPlayers; i++) {
+                try {
+                    System.out.print("Choose the type of player " + (i+1) + " (1- Regular, 2- Lucky, 3- Unlucky): ");
+                    int playerType = input.nextInt();
+
+                    Player newPlayer = PlayerFactory.getPlayer(playerType, colors.get(i));
+                    if (newPlayer != null) {
+                        gameboard.getPlayers().add(newPlayer);
+                    } else {
+                        System.out.println("Invalid player type. Please choose again.");
                         i--;
-                        break;
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Try again");
+                    input.nextLine();
+                    i--;
                 }
-                if (newPlayer != null) {
-                    gameboard.getPlayers().add(newPlayer);
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Try again");
-                input.nextLine();
-                i--;
+            }
+
+            if (isGameValid()){
+                System.out.println("\n----- All set! -----");
+                gameboard.listPlayers();
+                System.out.println("Booting up board game...\n");
+            } else {
+                System.out.println("Invalid player configuration: Should have at least two different types.\n");
             }
         }
     }
@@ -87,7 +97,7 @@ public abstract class Game {
                     System.out.println("Current player: P" + (i + 1) + " - " + gameboard.getPlayers().get(i).getColor() + "\n");
                     playerTurn(gameboard.getPlayers(), i, gameboard, input);
 
-                    if (gameboard.getPlayers().get(i).getPosition() >= 40) {
+                    if (gameboard.getPlayers().get(i).getPosition() >= gameboard.getBoard().size()) {
                         System.out.println("Player " + gameboard.getPlayers().get(i).getColor() + " wins! \n");
                         haveWinner = true;
                         break;

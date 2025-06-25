@@ -17,7 +17,7 @@ public class DebugMode extends Game{
         System.out.println("How much should P" + (playerIndex+1) + " move?");
         int playerRoll = input.nextInt();
 
-        if(players.get(playerIndex).getPosition() + playerRoll <= 40) {
+        if(players.get(playerIndex).getPosition() + playerRoll <= gameboard.getBoard().size()) {
             players.get(playerIndex).setPosition(
                     players.get(playerIndex).getPosition() + playerRoll
             );
@@ -25,7 +25,7 @@ public class DebugMode extends Game{
                     players.get(playerIndex).getPosition()
             ).effect(players, playerIndex);
         } else {
-            players.get(playerIndex).setPosition(40);
+            players.get(playerIndex).setPosition(gameboard.getBoard().size());
         }
 
         players.get(playerIndex).setCountPlays(

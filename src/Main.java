@@ -1,15 +1,13 @@
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import GameModes.*;
 import MyException.*;
-import Player.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        Game game = null;
+        Game game;
 
         System.out.println("----- Welcome to the game! -----\n");
         System.out.println("[Press any key to proceed]");
@@ -20,9 +18,34 @@ public class Main {
         } else {
             game = new RegularMode();
         }
-        System.out.println("----- Let's start by getting to know our competitors -----\n");
-        int numPlayers = 0;
+        System.out.println("----- Let's start by getting to know our gameboard -----");
+        System.out.println("----- How many tiles will there be? -----");
+
+        int numTiles = 0;
         boolean validInput = false;
+        while (!validInput){
+            try{
+                numTiles = input.nextInt();
+
+                if (numTiles > 0){
+                    validInput = true;
+                } else {
+                    System.out.println("Invalid input. Try again.");
+                }
+
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Try again.");
+                input.nextLine();
+            }
+        }
+
+        game.setupGameboard(numTiles);
+
+
+        System.out.println("----- And how about our competitors? -----\n");
+
+        int numPlayers = 0;
+        validInput = false;
         while (!validInput) {
             try{
                 System.out.print("How many players will there be? (2-6): ");
@@ -40,8 +63,7 @@ public class Main {
                 input.nextLine();
             }
         }
-
-
+        game.defPlayers(numPlayers);
 
         System.out.println("----- Get ready! The game is starting! -----\n");
         input.nextLine(); // Lendo buffer

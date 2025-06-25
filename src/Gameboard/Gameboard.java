@@ -4,30 +4,25 @@ import Player.Player;
 import Tile.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+
 
 public class Gameboard {
-    private ArrayList<Tile> board;
-    private ArrayList<Player> players;
+    private static Gameboard instance;
+    private final ArrayList<Tile> board;
+    private final ArrayList<Player> players;
 
-    public Gameboard(){
+    protected Gameboard(){
         this.board = new ArrayList<>();
+        this.players = new ArrayList<>();
     }
 
-
-    public boolean isGameValid(){
-        Set<String> playerTypes = new HashSet<>();
-
-        for (Player player : this.players) {
-            playerTypes.add(player.getPlayerType());
-
-            if (playerTypes.size() >= 2) {
-                return true;
-            }
+    public static Gameboard getInstance(){
+        if (instance == null){
+            instance = new Gameboard();
         }
-        return false;
+        return instance;
     }
+
 
     public void listPlayers(){
         System.out.println("\n-----[List of players]: \n");
