@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RegularMode extends Game{
-    public RegularMode(){super();};
+    public RegularMode(){
+        super();
+    }
 
     public void playerTurn(ArrayList<Player> players, int playerIndex, Gameboard gameboard, Scanner input){
 
