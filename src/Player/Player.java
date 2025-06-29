@@ -7,7 +7,7 @@ public abstract class Player {
     protected int position;
     protected boolean nextMove;
 
-    public Player(String color, int position, String playerType, boolean nextMove, int countPlays) {
+    protected Player(String color, int position, String playerType, boolean nextMove, int countPlays) {
         this.color = color;
         this.position = position;
         this.playerType = playerType;
@@ -29,8 +29,8 @@ public abstract class Player {
         return position;
     }
 
-    public void setPosition(int new_position){
-        this.position = new_position;
+    public void setPosition(int newPosition){
+        this.position = newPosition;
     }
 
     public String getPlayerType(){
