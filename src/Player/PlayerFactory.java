@@ -1,6 +1,10 @@
 package Player;
 
 public class PlayerFactory {
+    private PlayerFactory(){
+        //Sem necessidade de inicialização.
+    }
+
     public static Player getPlayer(int playerType, String color){
         return switch (playerType) {
             case 1 -> new RegularPlayer(color, 0, true, 0);
