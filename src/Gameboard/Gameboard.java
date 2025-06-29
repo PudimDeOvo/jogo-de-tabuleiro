@@ -26,15 +26,21 @@ public class Gameboard {
 
     public void listPlayers(){
         System.out.println("\n-----[List of players]: \n");
-        for (int i = 0; i < this.players.size(); i++){
-            System.out.println("P" + (i+1) + ": " + this.players.get(i).getColor() + " - " + this.players.get(i).getPlayerType() + " - Position: " + this.players.get(i).getPosition());
+        for(int i = 0; i < this.players.size(); i++){
+            System.out.println(formatPlayerInfo(this.players.get(i)));
         }
         System.out.print("\n");
+    }
+
+    private String formatPlayerInfo(Player player) {
+        return "P" + (players.indexOf(player) + 1) + ": " + player.getColor() + " - " + player.getPlayerType() + " - Position: " + player.getPosition();
     }
 
     public ArrayList<Tile> getBoard() {
         return board;
     }
-    public ArrayList<Player> getPlayers() { return players; }
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
 
 }
