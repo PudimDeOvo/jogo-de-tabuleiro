@@ -9,28 +9,26 @@ import java.util.*;
 
 public abstract class Game {
     Scanner input = new Scanner(System.in);
+    private static final String invalidInputMessage = "Invalid input. Try again.";
 
     protected final Gameboard gameboard = Gameboard.getInstance();
-    ArrayList<String> colors = new ArrayList<>() {{
-        add("Blue");
-        add("Red");
-        add("Green");
-        add("Yellow");
-        add("Pink");
-        add("Purple");
-    }};
+    protected final List<String> colors = new ArrayList<>(Arrays.asList(
+            "Red", "Blue", "Green", "Yellow", "Purple", "Orange", "Pink", "Cyan"
+    ));
 
 
-    public Game(){}
+    protected Game(){
+        //Sem necessidade de inicialização.
+    }
 
     public void setupGameboard(int numOfTiles){
         for(int i = 0; i<numOfTiles; i++){
             System.out.print("Choose type for tile " + (i+1) + " (regular, goback, lucky, magic, nonextmove or surprise): ");
-            String TileType = input.next();
+            String tileType = input.next();
 
-            Tile tile = TileFactory.getTile(TileType);
+            Tile tile = TileFactory.getTile(tileType);
             if (tile == null){
-                System.out.println("Invalid input. Try again");
+                System.out.println(invalidInputMessage);
                 i--;
             } else {
                 gameboard.getBoard().add(tile);
@@ -38,12 +36,14 @@ public abstract class Game {
         }
     }
 
+    private final static int validNumberPlayers = 2;
+
     private boolean isGameValid(){
         Set<String> playerTypes = new HashSet<>();
         for (Player player : gameboard.getPlayers()){
             playerTypes.add(player.getPlayerType());
 
-            if (playerTypes.size() >= 2){
+            if (playerTypes.size() >= validNumberPlayers){
                 return true;
             }
         }
@@ -62,11 +62,11 @@ public abstract class Game {
                     if (newPlayer != null) {
                         gameboard.getPlayers().add(newPlayer);
                     } else {
-                        System.out.println("Invalid player type. Please choose again.");
+                        System.out.println(invalidInputMessage);
                         i--;
                     }
                 } catch (InputMismatchException e) {
-                    System.out.println("Invalid input. Try again");
+                    System.out.println(invalidInputMessage);
                     input.nextLine();
                     i--;
                 }
@@ -82,6 +82,11 @@ public abstract class Game {
         }
     }
 
+    private String formatPlayerInfo(Player player) {
+        return "[Player: " + player.getColor() +
+                " - Position: " + player.getPosition() +
+                " - Total plays: " + player.getCountPlays() + "]";
+    }
 
     public abstract void playerTurn(ArrayList<Player> players, int playerIndex, Gameboard gameboard, Scanner input);
 
@@ -120,9 +125,7 @@ public abstract class Game {
         System.out.println("List of players and the count of each one's plays: \n");
 
         for (Player player : gameboard.getPlayers()) {
-            System.out.println("[Player: " + player.getColor() +
-                    " in position: " + player.getPosition() +
-                    " - Total plays: " + player.getCountPlays() + "]\n");
+            System.out.println(formatPlayerInfo(player));
         }
     }
 
