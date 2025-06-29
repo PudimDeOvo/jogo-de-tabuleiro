@@ -1,10 +1,14 @@
 package Tile;
 
 public class TileFactory {
-    public static Tile getTile(String TileType){
-        TileType = TileType.toLowerCase();
+    private TileFactory(){
+        //Sem necessidade de inicialização.
+    }
 
-        return switch (TileType) {
+    public static Tile getTile(String tileType){
+        tileType = tileType.toLowerCase();
+
+        return switch (tileType) {
             case "goback" -> new GoBackTile();
             case "lucky" -> new LuckyTile();
             case "magic" -> new MagicTile();
