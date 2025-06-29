@@ -15,7 +15,9 @@ public class MagicTile extends Tile{
                 indexSwapPlayer = i;
             }
         }
-        System.out.println("Woooohh! Swapping positions between player "+ players.get(index).getColor() + " and player " + players.get(indexSwapPlayer).getColor() + "!");
+        String chosenPlayer = players.get(index).getColor();
+        String swappedPlayer = players.get(indexSwapPlayer).getColor();
+        System.out.println("Woooohh! Swapping positions between player "+ chosenPlayer + " and player " + swappedPlayer + "!");
 
         int temp1 = players.get(index).getPosition();
         int temp2 = players.get(indexSwapPlayer).getPosition();
