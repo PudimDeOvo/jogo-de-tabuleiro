@@ -4,15 +4,18 @@ import Player.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 public class SurpriseTile extends Tile{
+    Random random = new Random();
+
+    private static final int numCard = 3;
+    private static final int minCardValue = 1;
+
     public SurpriseTile(){
         super();
     }
 
     public void effect(ArrayList<Player> players, int index){
-        Random random = new Random();
-        int card = random.nextInt(3) + 1;
+        int card = this.random.nextInt(numCard) + minCardValue;
 
         if (card == 1){
             Player player = new RegularPlayer(players.get(index).getColor(), players.get(index).getPosition(), true, players.get(index).getCountPlays());

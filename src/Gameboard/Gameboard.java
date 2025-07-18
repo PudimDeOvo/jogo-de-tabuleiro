@@ -1,44 +1,46 @@
 package Gameboard;
 
+import Player.Player;
 import Tile.*;
 
 import java.util.ArrayList;
 
+
 public class Gameboard {
-    private final ArrayList<Tile> board = new ArrayList<>();
+    private static Gameboard instance;
+    private final ArrayList<Tile> board;
+    private final ArrayList<Player> players;
 
-    public Gameboard(){
+    protected Gameboard(){
+        this.board = new ArrayList<>();
+        this.players = new ArrayList<>();
+    }
 
-        for (int i = 0; i <= 40; i++){
-            if (i == 10 || i == 25 || i == 38){
-                NoNextMoveTile tile = new NoNextMoveTile();
-                board.add(tile);
-            }
-            else if (i == 13){
-                SurpriseTile tile = new SurpriseTile();
-                board.add(tile);
-            }
-            else if (i == 5 || i == 15 || i == 30){
-                LuckyTile tile = new LuckyTile();
-                board.add(tile);
-            }
-            else if (i == 17 || i == 27){
-                GoBackTile tile = new GoBackTile();
-                board.add(tile);
-            }
-            else if (i == 20 || i == 35){
-                MagicTile tile = new MagicTile();
-                board.add(tile);
-            }
-            else {
-                RegularTile tile = new RegularTile();
-                board.add(tile);
-            }
+    public static Gameboard getInstance(){
+        if (instance == null){
+            instance = new Gameboard();
         }
+        return instance;
+    }
+
+
+    public void listPlayers(){
+        System.out.println("\n-----[List of players]: \n");
+        for(int i = 0; i < this.players.size(); i++){
+            System.out.println(formatPlayerInfo(this.players.get(i)));
+        }
+        System.out.print("\n");
+    }
+
+    private String formatPlayerInfo(Player player) {
+        return "P" + (players.indexOf(player) + 1) + ": " + player.getColor() + " - " + player.getPlayerType() + " - Position: " + player.getPosition();
     }
 
     public ArrayList<Tile> getBoard() {
         return board;
+    }
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
 }
